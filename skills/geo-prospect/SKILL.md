@@ -44,17 +44,17 @@ Each prospect is stored as a JSON record:
 ```json
 {
   "id": "PRO-001",
-  "company": "Electron Srl",
-  "domain": "electron-srl.com",
-  "contact_email": "info@electron-srl.com",
+  "company": "ExampleCorp",
+  "domain": "examplecorp.com",
+  "contact_email": "info@examplecorp.com",
   "contact_name": "",
   "industry": "Educational Equipment Manufacturing",
   "country": "Italy",
   "status": "qualified",
   "geo_score": 32,
   "audit_date": "2026-03-12",
-  "audit_file": "~/.geo-prospects/audits/electron-srl.com-2026-03-12.md",
-  "proposal_file": "~/.geo-prospects/proposals/electron-srl.com-proposal.md",
+  "audit_file": "~/.geo-prospects/audits/examplecorp.com-2026-03-12.md",
+  "proposal_file": "~/.geo-prospects/proposals/examplecorp.com-proposal.md",
   "monthly_value": 0,
   "contract_start": null,
   "contract_months": 0,
@@ -76,7 +76,7 @@ Each prospect is stored as a JSON record:
 ### `/geo prospect new <domain>`
 
 1. Check if `~/.geo-prospects/prospects.json` exists, create if not (empty array)
-2. Auto-detect company name from domain (e.g., `electron-srl.com` → `Electron Srl`)
+2. Auto-detect company name from domain (e.g., `examplecorp.com` → `ExampleCorp`)
 3. Assign next sequential ID: `PRO-001`, `PRO-002`, etc.
 4. Ask user for:
    - Contact name (optional)
@@ -84,7 +84,7 @@ Each prospect is stored as a JSON record:
    - Monthly contract value estimate (optional)
 5. Set status to `lead`
 6. Save to JSON file
-7. Suggest next step: "Run `/geo prospect audit electron-srl.com` to score this prospect"
+7. Suggest next step: "Run `/geo prospect audit examplecorp.com` to score this prospect"
 
 ### `/geo prospect list`
 
@@ -96,7 +96,7 @@ GEO Prospect Pipeline — March 2026
 
 ID       Domain                  Company           Status      Score  Value
 ───────  ──────────────────────  ────────────────  ──────────  ─────  ──────
-PRO-001  electron-srl.com        Electron Srl      Qualified   32/100  €4.5K
+PRO-001  examplecorp.com        ExampleCorp      Qualified   32/100  €4.5K
 PRO-002  acme.com                ACME Corp         Lead        —       —
 PRO-003  bigshop.it              BigShop           Won         41/100  €6.0K
 
@@ -119,7 +119,7 @@ Committed MRR: €6,000 | Pipeline Value: €4,500
 1. Find prospect by ID or domain
 2. Append note with current ISO date
 3. Save back to JSON
-4. Confirm: "Note added to Electron Srl (PRO-001)"
+4. Confirm: "Note added to ExampleCorp (PRO-001)"
 
 ### `/geo prospect status <id-or-domain> <status>`
 
@@ -165,9 +165,9 @@ All data stored in `~/.geo-prospects/`:
 ~/.geo-prospects/
 ├── prospects.json          # Main CRM database
 ├── audits/                 # Quick audit snapshots
-│   └── electron-srl.com-2026-03-12.md
+│   └── examplecorp.com-2026-03-12.md
 └── proposals/              # Generated proposals
-    └── electron-srl.com-proposal.md
+    └── examplecorp.com-proposal.md
 ```
 
 Create directory if it does not exist: `mkdir -p ~/.geo-prospects/audits ~/.geo-prospects/proposals`
