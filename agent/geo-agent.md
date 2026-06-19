@@ -1,7 +1,6 @@
 ---
 description: GEO (Generative Engine Optimization) specialist — audits, citability scoring, crawler access, llms.txt, brand mentions, platform optimization, schema markup, technical SEO, content E-E-A-T, reports, and proposals. Invoke via natural language: "geo audit", "geo citability", "analyze website", "seo audit", etc.
 mode: subagent
-model: opencode-go/deepseek-v4-flash
 permission:
   bash: allow
   read: allow
