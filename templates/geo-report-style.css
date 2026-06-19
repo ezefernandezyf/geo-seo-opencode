@@ -1,0 +1,123 @@
+/* =====================================================
+   GEO Audit Report — Professional PDF Stylesheet
+   Rendered via pandoc → Chrome headless
+   ===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@page {
+  size: A4;
+  margin: 18mm 18mm 22mm 18mm;
+}
+
+@page :first {
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --navy:    #0f1f3d;
+  --blue:    #1a3a6b;
+  --accent:  #e8472a;
+  --teal:    #0891b2;
+  --success: #059669;
+  --warning: #d97706;
+  --danger:  #dc2626;
+  --info:    #2563eb;
+  --text:    #1e293b;
+  --muted:   #64748b;
+  --light:   #f8fafc;
+  --border:  #e2e8f0;
+  --white:   #ffffff;
+  --critical-bg: #fef2f2;
+  --critical-border: #dc2626;
+  --high-bg: #fff7ed;
+  --high-border: #ea580c;
+  --medium-bg: #fefce8;
+  --medium-border: #ca8a04;
+  --low-bg: #f0fdf4;
+  --low-border: #16a34a;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 9.5pt;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--white);
+  margin: 0;
+  padding: 0;
+}
+
+blockquote {
+  background: var(--light);
+  border-left: 4px solid var(--teal);
+  margin: 16px 0;
+  padding: 14px 18px;
+  border-radius: 0 6px 6px 0;
+  font-style: normal;
+  color: var(--text);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0 20px;
+  font-size: 9pt;
+  page-break-inside: avoid;
+}
+
+thead tr {
+  background: var(--navy);
+  color: var(--white);
+}
+
+thead th {
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 8pt;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+td.score-excellent { color: var(--success); font-weight: 600; }
+td.score-good      { color: #0369a1;        font-weight: 600; }
+td.score-fair      { color: var(--warning); font-weight: 600; }
+td.score-poor      { color: #ea580c;        font-weight: 600; }
+td.score-critical  { color: var(--danger);  font-weight: 600; }
+
+.finding-critical { border-left: 4px solid var(--critical-border); background: var(--critical-bg); padding: 10px 14px; margin: 8px 0 16px; border-radius: 0 4px 4px 0; }
+.finding-high     { border-left: 4px solid var(--high-border);    background: var(--high-bg);        padding: 10px 14px; margin: 8px 0 16px; border-radius: 0 4px 4px 0; }
+.finding-medium   { border-left: 4px solid var(--medium-border);  background: var(--medium-bg);      padding: 10px 14px; margin: 8px 0 16px; border-radius: 0 4px 4px 0; }
+.finding-low      { border-left: 4px solid var(--low-border);     background: var(--low-bg);         padding: 10px 14px; margin: 8px 0 16px; border-radius: 0 4px 4px 0; }
+
+pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 14px 16px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 8pt;
+  line-height: 1.6;
+  overflow-x: auto;
+  page-break-inside: avoid;
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 8.5pt;
+  background: #f1f5f9;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #be185d;
+}
