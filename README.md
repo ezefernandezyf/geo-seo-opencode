@@ -315,8 +315,6 @@ This project is an adaptation of [geo-seo-claude](https://github.com/zubair-trab
 
 Both the original and this adaptation are distributed under the **MIT License**. See [LICENSE](LICENSE) for full terms.
 
-Want to learn how to turn GEO into a business? Join the [AI Workshop Community](https://skool.com/aiworkshop).
-
 ---
 
 ## Contributing
