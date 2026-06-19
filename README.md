@@ -94,23 +94,14 @@ cd geo-seo-opencode
 3. Creates an isolated Python virtual environment at `~/.config/opencode/skills/geo/.venv/`
 4. Installs Python dependencies (requests, beautifulsoup4, lxml, etc.)
 5. Patches script shebangs and path references
-6. Verifies the installation
+6. **Auto-configures `opencode.json`** — adds `"geo-agent": "allow"` to your orchestrator's task permissions
+7. Verifies the installation
 
 ### Post-Install
 
-1. **Configure orchestrator permissions** — Add `"geo-agent": "allow"` to the `permission.task` section of your `~/.config/opencode/opencode.json`:
+**Restart opencode** — that's it. The installer handles everything else.
 
-   ```json
-   "permission": {
-     "task": {
-       "*": "deny",
-       "geo-agent": "allow",
-       ...
-     }
-   }
-   ```
-
-2. **Restart opencode** for all changes to take effect. The geo skills will be auto-discovered, and the orchestrator will detect GEO-related requests and delegate them to the geo-agent.
+No manual config editing needed. The geo skills will be auto-discovered, and the orchestrator will detect GEO-related requests and delegate them to the geo-agent.
 
 ---
 

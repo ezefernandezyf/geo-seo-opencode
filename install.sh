@@ -298,6 +298,77 @@ main() {
         print_warning "One or more files are missing. The install may be incomplete."
     fi
 
+    # ---- Configure opencode.json Permissions ----
+    print_info "Configuring opencode permissions for geo-agent..."
+
+    OPENCODE_CONFIG="${OPENCODE_DIR}/opencode.json"
+    PERMISSION_OK=false
+
+    if [ -f "$OPENCODE_CONFIG" ]; then
+        "$VENV_PY" -c "
+import json, os, sys
+
+config_path = os.path.expanduser('$OPENCODE_CONFIG')
+backup_path = config_path + '.bak'
+
+try:
+    with open(config_path) as f:
+        config = json.load(f)
+
+    orchestrator = config.get('agent', {}).get('gentle-orchestrator', {})
+    permissions = orchestrator.get('permission', {})
+    task_perms = permissions.get('task', {})
+
+    if task_perms.get('geo-agent') == 'allow':
+        print('ALREADY_CONFIGURED')
+        sys.exit(0)
+
+    # Add the permission
+    permissions.setdefault('task', {})['geo-agent'] = 'allow'
+    orchestrator['permission'] = permissions
+    config.setdefault('agent', {})['gentle-orchestrator'] = orchestrator
+
+    # Backup original
+    if not os.path.exists(backup_path):
+        import shutil
+        shutil.copy2(config_path, backup_path)
+
+    with open(config_path, 'w') as f:
+        json.dump(config, f, indent=2)
+
+    print('ADDED')
+except Exception as e:
+    print(f'ERROR: {e}')
+    sys.exit(1)
+" 2>&1 || true
+
+        PERMISSION_RESULT=$("$VENV_PY" -c "
+import json, os
+config_path = os.path.expanduser('$OPENCODE_CONFIG')
+with open(config_path) as f:
+    config = json.load(f)
+task_perms = config.get('agent', {}).get('gentle-orchestrator', {}).get('permission', {}).get('task', {})
+if task_perms.get('geo-agent') == 'allow':
+    print('ok')
+else:
+    print('missing')
+" 2>/dev/null || echo "missing")
+
+        if [ "$PERMISSION_RESULT" = "ok" ]; then
+            print_success "Permission added to opencode.json"
+            PERMISSION_OK=true
+        else
+            print_warning "Could not auto-configure opencode.json permissions."
+            echo "  The geo-agent needs 'geo-agent': 'allow' in your orchestrator's"
+            echo "  permission.task section. Edit ~/.config/opencode/opencode.json manually."
+            echo "  See the README for details."
+        fi
+    else
+        print_warning "opencode.json not found at ${OPENCODE_CONFIG}."
+        echo "  After creating your opencode config, add 'geo-agent': 'allow'"
+        echo "  to your orchestrator's permission.task section."
+    fi
+
     # ---- Print Summary ----
     echo ""
     echo -e "${GREEN}╔══════════════════════════════════════════╗${NC}"
@@ -318,20 +389,11 @@ main() {
     echo "    geo crawlers https://example.com"
     echo "    geo report https://example.com"
     echo ""
-    echo -e "${BLUE}🔧 Post-Install: Configure opencode Permissions${NC}"
-    echo ""
-    echo "  The geo-agent needs permission to be launched by your orchestrator."
-    echo "  Add 'geo-agent': 'allow' to the permission.task section of your"
-    echo "  opencode.json file (~/.config/opencode/opencode.json)"
-    echo ""
-    echo "  Example:"
-    echo '    "permission": {'
-    echo '      "task": {'
-    echo '        "*": "deny",'
-    echo '        "geo-agent": "allow",'
-    echo '        ...'
-    echo '      }'
-    echo '    }'
+    if [ "$PERMISSION_OK" = true ]; then
+        echo -e "${GREEN}  🔧 opencode.json permissions configured automatically ✓${NC}"
+    else
+        echo -e "${YELLOW}  ⚠  opencode permissions need manual setup — see above${NC}"
+    fi
     echo ""
     echo -e "${BLUE}Available Commands:${NC}"
     echo "    audit <url>       Full GEO + SEO audit"
