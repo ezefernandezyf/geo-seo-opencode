@@ -327,7 +327,6 @@ try:
             'description': 'GEO specialist — audits, citability, crawlers, llms.txt, brand mentions, platform optimization, schema, technical SEO, content E-E-A-T, reports, and proposals',
             'hidden': True,
             'mode': 'subagent',
-            'model': 'opencode-go/deepseek-v4-flash',
             'prompt': agent_prompt,
             'tools': {
                 'bash': True,
