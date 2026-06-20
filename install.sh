@@ -325,8 +325,8 @@ main() {
         "$VENV_PY" -c "
 import json, os, sys
 
-config_path = os.path.expanduser('$OPENCODE_CONFIG')
-agent_path = os.path.expanduser('$AGENTS_DIR/geo-agent.md')
+config_path = os.path.expanduser('~/.config/opencode/opencode.json')
+agent_path = os.path.expanduser('~/.config/opencode/agents/geo-agent.md')
 backup_path = config_path + '.bak'
 
 try:
@@ -390,7 +390,7 @@ except Exception as e:
 
         CONFIG_RESULT=$("$VENV_PY" -c "
 import json, os
-config_path = os.path.expanduser('$OPENCODE_CONFIG')
+config_path = os.path.expanduser('~/.config/opencode/opencode.json')
 with open(config_path) as f:
     config = json.load(f)
 agent_registered = 'geo-agent' in config.get('agent', {})
