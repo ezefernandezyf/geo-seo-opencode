@@ -15,12 +15,29 @@ SKILLS_DIR="${OPENCODE_DIR}/skills"
 AGENTS_DIR="${OPENCODE_DIR}/agents"
 INSTALL_DIR="${SKILLS_DIR}/geo"
 VENV_DIR="${INSTALL_DIR}/.venv"
-VENV_PY="${VENV_DIR}/bin/python3"
-# Tilde-form path for patched references inside skill .md files.
-# The tilde is intentionally kept literal — opencode's Bash expands
-# it when running the command later. Do NOT replace with $HOME here.
-# shellcheck disable=SC2088
-VENV_MD_PY='~/.config/opencode/skills/geo/.venv/bin/python3'
+
+# Detect OS for venv binary paths (Windows uses Scripts/, Unix uses bin/)
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)  IS_WINDOWS=true ;;
+    *)                      IS_WINDOWS=false ;;
+esac
+
+if [ "$IS_WINDOWS" = true ]; then
+    VENV_PY="${VENV_DIR}/Scripts/python.exe"
+    # Tilde-form path for patched references inside skill .md files.
+    # The tilde is intentionally kept literal — opencode's Bash expands
+    # it when running the command later. Do NOT replace with $HOME here.
+    # shellcheck disable=SC2088
+    VENV_MD_PY='~/.config/opencode/skills/geo/.venv/Scripts/python.exe'
+else
+    VENV_PY="${VENV_DIR}/bin/python3"
+    # Tilde-form path for patched references inside skill .md files.
+    # The tilde is intentionally kept literal — opencode's Bash expands
+    # it when running the command later. Do NOT replace with $HOME here.
+    # shellcheck disable=SC2088
+    VENV_MD_PY='~/.config/opencode/skills/geo/.venv/bin/python3'
+fi
+
 TEMP_DIR=$(mktemp -d)
 
 # Detect if running via curl pipe (no interactive input available)
